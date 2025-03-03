@@ -16,10 +16,12 @@ public class GreetingService {
         this.greetingRepository = greetingRepository;
     }
 
+    // UC2 - Simple Greeting
     public String getSimpleGreeting() {
         return "Hello World";
     }
 
+    // UC3 - Personalized Greeting
     public String getPersonalizedGreeting(String firstName, String lastName) {
         if (firstName != null && lastName != null) {
             return "Hello, " + firstName + " " + lastName + "!";
@@ -32,19 +34,24 @@ public class GreetingService {
         }
     }
 
-    //  UC4: Save a greeting to the database
+    // UC4 - Save a greeting
     public Greeting saveGreeting(String message) {
         Greeting greeting = new Greeting(message);
         return greetingRepository.save(greeting);
     }
 
-    //  UC4: Retrieve all stored greetings
+    // UC4 - Retrieve all stored greetings
     public List<Greeting> getAllGreetings() {
         return greetingRepository.findAll();
     }
 
-    //  UC4: Retrieve a specific greeting by ID
+    // UC4 - Retrieve a specific greeting by ID
     public Optional<Greeting> getGreetingById(Long id) {
         return greetingRepository.findById(id);
+    }
+
+    // UC5 - Retrieve only the message of a greeting by ID
+    public String findGreetingMessageById(Long id) {
+        return greetingRepository.findMessageById(id);
     }
 }

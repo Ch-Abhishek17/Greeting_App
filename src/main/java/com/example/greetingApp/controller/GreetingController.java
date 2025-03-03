@@ -1,4 +1,5 @@
 package com.example.greetingApp.controller;
+
 import com.example.greetingApp.model.Greeting;
 import com.example.greetingApp.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    // UC1
+    // UC1 - Basic GET Request
     @GetMapping
     public Map<String, String> getGreeting() {
         return Map.of("message", "Hello, this is a GET request!");
@@ -38,13 +39,13 @@ public class GreetingController {
         return Map.of("message", "Hello, this is a DELETE request!");
     }
 
-    // UC2
+    // UC2 - Simple Greeting
     @GetMapping("/simple")
     public Map<String, String> getSimpleGreeting() {
         return Map.of("message", greetingService.getSimpleGreeting());
     }
 
-    // UC3
+    // UC3 - Personalized Greeting
     @GetMapping("/personalized")
     public Map<String, String> getPersonalizedGreeting(
             @RequestParam(required = false) String firstName,
@@ -52,7 +53,7 @@ public class GreetingController {
         return Map.of("message", greetingService.getPersonalizedGreeting(firstName, lastName));
     }
 
-    //  UC4 - Save a greeting
+    // UC4 - Save a Greeting
     @PostMapping("/save")
     public Greeting saveGreeting(@RequestBody Map<String, String> request) {
         return greetingService.saveGreeting(request.get("message"));
@@ -68,5 +69,11 @@ public class GreetingController {
     @GetMapping("/{id}")
     public Optional<Greeting> getGreetingById(@PathVariable Long id) {
         return greetingService.getGreetingById(id);
+    }
+
+    // UC5 - Get Greeting Message by ID
+    @GetMapping("/message/{id}")
+    public Map<String, String> getGreetingMessageById(@PathVariable Long id) {
+        return Map.of("message", greetingService.findGreetingMessageById(id));
     }
 }
