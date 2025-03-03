@@ -76,4 +76,10 @@ public class GreetingController {
     public Map<String, String> getGreetingMessageById(@PathVariable Long id) {
         return Map.of("message", greetingService.findGreetingMessageById(id));
     }
+    // UC6 - Get all greeting messages (Only messages, not full objects)
+    @GetMapping("/messages")
+    public List<String> getAllGreetingMessages() {
+        return greetingService.getAllGreetingMessages();
+    }
+
 }

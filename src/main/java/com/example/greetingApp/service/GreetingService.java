@@ -54,4 +54,12 @@ public class GreetingService {
     public String findGreetingMessageById(Long id) {
         return greetingRepository.findMessageById(id);
     }
+    // UC6 - Retrieve only Greeting Messages
+    public List<String> getAllGreetingMessages() {
+        return greetingRepository.findAll()
+                .stream()
+                .map(Greeting::getMessage)  // Extract only messages
+                .toList();
+    }
+
 }
