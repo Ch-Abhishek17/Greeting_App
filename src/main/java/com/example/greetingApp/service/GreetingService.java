@@ -68,6 +68,15 @@ public class GreetingService {
             return greetingRepository.save(greeting);  // Save updated message
         });
     }
+    // UC8 - Delete a greeting message by ID
+    public boolean deleteGreeting(Long id) {
+        if (greetingRepository.existsById(id)) {
+            greetingRepository.deleteById(id);  // Delete greeting if exists
+            return true;
+        }
+        return false;  // Return false if ID not found
+    }
+
 
 
 }
