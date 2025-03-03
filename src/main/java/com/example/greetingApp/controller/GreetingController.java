@@ -1,12 +1,19 @@
 package com.example.greetingApp.controller;
-import org.springframework.web.bind.annotation.*;
+import com.example.greetingApp.service.GreetingService;
 
+import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/greet")
-class GreetingController {
+public class GreetingController {
+
+    private final GreetingService greetingService;
+
+    public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
 
     @GetMapping
     public Map<String, String> getGreeting() {
@@ -36,5 +43,11 @@ class GreetingController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Hello, this is a DELETE request!");
         return response;
+    }
+
+    // New UC2 Endpoint - Uses Service Layer
+    @GetMapping("/simple")
+    public Map<String, String> getSimpleGreeting() {
+        return Map.of("message", greetingService.getSimpleGreeting());
     }
 }
