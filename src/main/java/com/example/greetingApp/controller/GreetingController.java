@@ -1,7 +1,8 @@
 package com.example.greetingApp.controller;
-import com.example.greetingApp.service.GreetingService;
 
+import com.example.greetingApp.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
+    // UC1
     @GetMapping
     public Map<String, String> getGreeting() {
         Map<String, String> response = new HashMap<>();
@@ -45,9 +47,17 @@ public class GreetingController {
         return response;
     }
 
-    // New UC2 Endpoint - Uses Service Layer
+    // ✅ UC2
     @GetMapping("/simple")
     public Map<String, String> getSimpleGreeting() {
         return Map.of("message", greetingService.getSimpleGreeting());
+    }
+
+    // UC3 - New Endpoint for Personalized Greeting
+    @GetMapping("/personalized")
+    public Map<String, String> getPersonalizedGreeting(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        return Map.of("message", greetingService.getPersonalizedGreeting(firstName, lastName));
     }
 }
