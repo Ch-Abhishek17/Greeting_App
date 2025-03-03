@@ -61,5 +61,13 @@ public class GreetingService {
                 .map(Greeting::getMessage)  // Extract only messages
                 .toList();
     }
+    // UC7 - Update an existing greeting message
+    public Optional<Greeting> updateGreeting(Long id, String newMessage) {
+        return greetingRepository.findById(id).map(greeting -> {
+            greeting.setMessage(newMessage);  // Update message
+            return greetingRepository.save(greeting);  // Save updated message
+        });
+    }
+
 
 }
