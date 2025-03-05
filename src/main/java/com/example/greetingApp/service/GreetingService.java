@@ -3,8 +3,11 @@ package com.example.greetingApp.service;
 import com.example.greetingApp.model.Greeting;
 import com.example.greetingApp.repository.GreetingRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -54,6 +57,7 @@ public class GreetingService {
     public String findGreetingMessageById(Long id) {
         return greetingRepository.findMessageById(id);
     }
+
     // UC6 - Retrieve only Greeting Messages
     public List<String> getAllGreetingMessages() {
         return greetingRepository.findAll()
@@ -76,7 +80,4 @@ public class GreetingService {
         }
         return false;  // Return false if ID not found
     }
-
-
-
 }
