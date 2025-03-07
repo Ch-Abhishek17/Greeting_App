@@ -1,10 +1,14 @@
 package com.example.greetingApp.controller;
 import com.example.greetingApp.model.AuthUser;
+import com.example.greetingApp.repository.AuthUserRepository;
 import com.example.greetingApp.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -12,6 +16,9 @@ public class AuthUserController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private AuthUserRepository authUserRepository;
 
     // Register User
     @PostMapping("/register")
@@ -33,5 +40,18 @@ public class AuthUserController {
         }
 
         return ResponseEntity.ok(Map.of("message", "Login successful!", "token", token));
+    }
+
+    //Get User Details by Email
+    @GetMapping("/userDetails/{email}")
+    public ResponseEntity<?> getUserDetails(@PathVariable String email) {
+        Optional<AuthUser> userOpt = authUserRepository.findByEmail(email);
+
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User not found with email: " + email);
+        }
+
+        return ResponseEntity.ok(userOpt.get());
     }
 }
